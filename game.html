@@ -1,0 +1,114 @@
+<html>
+  <head>
+	 <style>
+		li.selected {
+			color: red;
+		}
+		.distance (
+			display: inline-block;
+			color: green;
+		)
+		.control (
+			display: inline-block;
+			width:500px;
+		)
+		li.control {
+			color: blue;
+		}
+	 </style> 
+    <script type="text/javascript" src="MooTools-Core-1.6.0.js"></script>
+    
+    <script type="text/javascript">
+	window.addEvent( 'keydown', function( event ){
+		
+		if(event.key == 'l') {
+			$$('li').set('class','control');
+			$('instructions').appendHTML('<li class=selected ><div class=control> left</div><div class=distance>10</div></li>','top');
+		}
+		if(event.key == 'r') {
+			$$('li').set('class','control');
+			$('instructions').appendHTML('<li class=selected ><div class=control> right</div><div class=distance>10</div></li>','top');
+		}
+		if(event.key == 'f') {
+			$$('li').set('class','control');
+			$('instructions').appendHTML('<li class=selected ><div class=control> forward</div><div class=distance>10</div></li>','top');
+		}	
+		if(event.key == 'b') {
+			$$('li').set('class','control');
+			$('instructions').appendHTML('<li class=selected ><div class=control> back</div><div class=distance>10</div></li>','top');
+		}
+		if(event.key == 'u') {
+			
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x+10;
+				element.set('text',x);
+			});
+		}
+		if(event.key == 'd') {
+		
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x-10;
+				element.set('text',x);
+			});
+		}
+		if(event.key == 'o') {
+			
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x+1;
+				element.set('text',x);
+			});
+		}
+		if(event.key == 'k') {
+		
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x-1;
+				element.set('text',x);
+			});
+		}
+		if(event.key == 'i') {
+			
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x+100;
+				element.set('text',x);
+			});
+		}
+		if(event.key == 'j') {
+		
+			$$('li.selected span.distance').each(function(element){
+				x = parseInt(element.get('text'));
+				x = x-100;
+				element.set('text',x);
+			});
+		}			
+		if(event.key == 'enter') {
+			text = '{';
+			$$('span').each(function(element){
+					if( text != '{')
+						text=text+','
+					text=text+element.get('class');	
+					text=text+':';
+					text=text+element.get('text');	
+				});
+			text =text+ '}';
+			var myRequest = new Request({method: 'post', url: 'flask.py'});
+			myRequest.send(text);	
+		}						
+	});
+		
+   
+	
+    
+    </script>
+    
+  </head>
+  <body>
+	<ul id='instructions' ><li class='selected' ><div  class='control'> left</div><div class='distance'>10</div> </li></ul>
+
+  </body>
+  
+</html>
